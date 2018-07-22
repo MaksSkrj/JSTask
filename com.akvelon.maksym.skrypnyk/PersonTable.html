@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table</title>
+    <style>
+        .layer1 {
+            padding: 20px;
+            padding-right: 50px;
+            float: left;
+            width: 220px;
+        }
+
+        .layer2 {
+            padding: 5px;
+            width: 300px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layer1">
+    <table id="table" border="1">
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Sex</th>
+            <th>DOB</th>
+        </tr>
+    </table>
+</div>
+
+<div class="layer2" name="input">
+    <form>
+        Name:<br>
+        <input type="text" id="Name"> <br>
+        Surname:<br>
+        <input type="text" id="Surname"> <br>
+
+
+        <label>Sex: </label>
+        <input type="radio" name="Sex" id="MaleSex" value="male" checked="checked"/>
+        <label for="MaleSex">male</label>
+        <input type="radio" name="Sex" id="FemaleSex" value="female"/>
+        <label for="FemaleSex">female</label><br>
+
+
+        Birthday:<br>
+        <input type="text" id="Birthday"/> <br><br>
+
+        <button onclick="addRecord()" class="Add button">Add</button>
+
+        <button onclick="clearInput()" class="Cancel button">Cancel</button>
+    </form>
+</div>
+
+
+<script>
+    let rIndex;
+    let table = document.getElementById("table");
+
+    function addRecord() {
+        let newRow = table.insertRow(table.rows.length);
+        let cell2 = newRow.insertCell(0);
+        let cell3 = newRow.insertCell(1);
+        let cell4 = newRow.insertCell(2);
+        let cell5 = newRow.insertCell(3);
+        let name = document.getElementById("Name").value;
+        let surname = document.getElementById("Surname").value;
+        let sex = document.querySelector('input[name="Sex"]:checked').value;
+        let DOB = document.getElementById("Birthday").value;
+
+        let btn = document.createElement("Button");
+        btn.onclick = removeSelectedRow();
+        document.body.appendChild(btn);
+
+        cell2.innerHTML = name;
+        cell3.innerHTML = surname;
+        cell4.innerHTML = sex;
+        cell5.innerHTML = DOB;
+        selectedRowToInput();
+    }
+
+    function selectedRowToInput() {
+        for (let i = 1; i < table.rows.length; i++) {
+            table.rows[i].onclick = function () {
+                rIndex = this.rowIndex;
+                document.getElementById("Name").value = this.cells[0].innerHTML;
+                document.getElementById("Surname").value = this.cells[1].innerHTML;
+                document.getElementsByName("Sex").value = this.cells[2].innerHTML;
+                document.getElementById("Birthday").value = this.cells[3].innerHTML;
+            };
+        }
+    }
+
+    function clearInput() {
+        document.getElementById("Name").value = '';
+        document.getElementById("Surname").value = '';
+        document.getElementById("Birthday").value = '';
+    }
+
+
+</script>
+
+</body>
+</html>
