@@ -27,12 +27,12 @@
             <th>Surname</th>
             <th>Sex</th>
             <th>DOB</th>
+            <th>Delete</th>
         </tr>
     </table>
 </div>
 
-<div class="layer2" name="input">
-    <form>
+<div class="layer2">
         Name:<br>
         <input type="text" id="Name"> <br>
         Surname:<br>
@@ -52,46 +52,46 @@
         <button onclick="addRecord()" class="Add button">Add</button>
 
         <button onclick="clearInput()" class="Cancel button">Cancel</button>
-    </form>
 </div>
 
 
 <script>
-    let rIndex;
-    let table = document.getElementById("table");
-
     function addRecord() {
+        let table = document.getElementById("table")
         let newRow = table.insertRow(table.rows.length);
-        let cell2 = newRow.insertCell(0);
-        let cell3 = newRow.insertCell(1);
-        let cell4 = newRow.insertCell(2);
-        let cell5 = newRow.insertCell(3);
+
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+        let cell4 = newRow.insertCell(3);
+        let cell5 = newRow.insertCell(4);
+
         let name = document.getElementById("Name").value;
         let surname = document.getElementById("Surname").value;
         let sex = document.querySelector('input[name="Sex"]:checked').value;
         let DOB = document.getElementById("Birthday").value;
+        let DeleteBtn = '<button onClick="deleteRecord()">Delete</button>';
 
-        let btn = document.createElement("Button");
-        btn.onclick = removeSelectedRow();
-        document.body.appendChild(btn);
-
-        cell2.innerHTML = name;
-        cell3.innerHTML = surname;
-        cell4.innerHTML = sex;
-        cell5.innerHTML = DOB;
-        selectedRowToInput();
+        cell1.innerHTML = name;
+        cell2.innerHTML = surname;
+        cell3.innerHTML = sex;
+        cell4.innerHTML = DOB;
+        cell5.innerHTML = DeleteBtn;
     }
 
-    function selectedRowToInput() {
+    function deleteRecord() {
+        let index;
+        let table = document.getElementById("table");
         for (let i = 1; i < table.rows.length; i++) {
-            table.rows[i].onclick = function () {
-                rIndex = this.rowIndex;
-                document.getElementById("Name").value = this.cells[0].innerHTML;
-                document.getElementById("Surname").value = this.cells[1].innerHTML;
-                document.getElementsByName("Sex").value = this.cells[2].innerHTML;
-                document.getElementById("Birthday").value = this.cells[3].innerHTML;
-            };
+            table.rows[i].cells[4].onclick = function () {
+                let c = confirm("do yo want to delete this row?")
+                if(c === true){
+                    index = this.parentElement.rowIndex;
+                    table.deleteRow(index)
+                }
+            }
         }
+
     }
 
     function clearInput() {
