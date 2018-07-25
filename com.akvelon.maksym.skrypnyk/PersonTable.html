@@ -19,11 +19,11 @@
 <div class="layer1">
     <table id="table" border="1">
         <tr>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Sex</th>
-            <th>DOB</th>
-            <th>Delete</th>
+            <td>Name</td>
+            <td>Surname</td>
+            <td>Sex</td>
+            <td>DOB</td>
+            <td>Delete</td>
         </tr>
     </table>
 </div>
@@ -66,28 +66,31 @@
         let surname = document.getElementById("Surname").value;
         let sex = document.querySelector('input[name="Sex"]:checked').value;
         let DOB = document.getElementById("Birthday").value;
-        let DeleteBtn = '<button onClick="deleteRecord()">Delete</button>';
+        let DeleteBtn = '<button onclick="deleteRecord()">Delete</button>';
 
         cell1.innerHTML = name;
         cell2.innerHTML = surname;
         cell3.innerHTML = sex;
         cell4.innerHTML = DOB;
         cell5.innerHTML = DeleteBtn;
+
+        console.log("Person " + name + " " + surname + " " + sex + " " + DOB + " Was added");
     }
 
     function deleteRecord() {
         let index;
         let table = document.getElementById("table");
         for (let i = 1; i < table.rows.length; i++) {
-            table.rows[i].cells[4].onclick = function () {
-                let c = confirm("do yo want to delete this row?")
+            let cellPosition = table.rows[1].cells.length - 1;
+            (table.rows[i].cells[cellPosition]).onclick = function() {
+                let c = confirm("do yo want to delete this row?");
                 if(c === true){
                     index = this.parentElement.rowIndex;
-                    table.deleteRow(index)
+                    table.deleteRow(index);
                 }
+                console.log("row "+ i + " was deleted");
             }
         }
-
     }
 
     function clearInput() {
