@@ -81,7 +81,7 @@
         let index;
         let table = document.getElementById("table");
         for (let i = 1; i < table.rows.length; i++) {
-            let cellPosition = table.rows[1].cells.length - 1;
+            let cellPosition = table.rows[i].cells.length - 1;
             (table.rows[i].cells[cellPosition]).onclick = function() {
                 let c = confirm("do yo want to delete this row?");
                 if(c === true){
